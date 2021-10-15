@@ -1,0 +1,41 @@
+Sub EmptyColumnRemover()
+
+
+    Dim xRg As Range
+
+    Dim xTxt As String
+
+    Dim xCell As Range
+
+    Dim I As Long
+
+    On Error Resume Next
+
+    If ActiveWindow.RangeSelection.Count > 1 Then
+
+      xTxt = ActiveWindow.RangeSelection.AddressLocal
+
+    Else
+
+      xTxt = ActiveSheet.UsedRange.AddressLocal
+
+    End If
+
+    Set xRg = Application.InputBox("Select Data:", "Microsoft Excel", xTxt, , , , , 8)
+
+    If xRg Is Nothing Then Exit Sub
+
+    On Error Resume Next
+
+    For I = 1 To xRg.Column + xRg.Columns.Count
+
+        If Application.WorksheetFunction.CountA(xRg.Columns(I)) = 0 Then
+
+            xRg.Columns(I).EntireColumn.Hidden = True
+
+        End If
+
+    Next
+
+End Sub
+
